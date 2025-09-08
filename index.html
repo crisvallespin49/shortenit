@@ -13,27 +13,23 @@
     --primary-color: #137fec;
   }
   html {
-    scroll-behavior: smooth; /* enables smooth scrolling */
+    scroll-behavior: smooth;
   }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800" style='font-family: Inter, "Noto Sans", sans-serif;'>
-<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+<div class="relative flex size-full min-h-screen flex-col overflow-x-hidden">
 <div class="layout-container flex h-full grow flex-col">
 
 <!-- HEADER -->
-<header class="flex items-center justify-between whitespace-nowrap px-10 py-4">
+<header class="flex items-center justify-between px-10 py-4">
   <div class="flex items-center gap-3 text-gray-900">
     <span class="material-symbols-outlined text-3xl text-[var(--primary-color)]"> link </span>
     <h2 class="text-xl font-bold tracking-tight">ShortenIt</h2>
   </div>
-
-  <!-- DONATE BUTTON -->
   <a href="#donate" class="ml-6 flex items-center justify-center rounded-md h-10 px-5 bg-[var(--primary-color)] text-white text-sm font-semibold shadow-md hover:bg-opacity-90 transition-colors">
     Donate any amount
   </a>
-  
-  
 </header>
 
 <!-- MAIN -->
@@ -48,15 +44,16 @@
         Create clean, memorable short links instantly. No account needed.
       </p>
       <div class="max-w-xl mx-auto">
-        <form class="flex flex-col sm:flex-row items-center gap-3 bg-white p-2 rounded-lg shadow-lg border border-gray-200">
+        <form onsubmit="event.preventDefault(); shortenUrl();" class="flex flex-col sm:flex-row items-center gap-3 bg-white p-2 rounded-lg shadow-lg border border-gray-200">
           <div class="flex items-center w-full sm:w-auto flex-1">
             <span class="material-symbols-outlined text-gray-400 pl-3"> link </span>
-            <input class="form-input w-full flex-1 resize-none overflow-hidden rounded-md text-gray-900 focus:outline-0 focus:ring-0 border-none bg-white h-full placeholder:text-gray-500 px-3 text-base" placeholder="Paste your long URL here"/>
+            <input id="longUrl" class="form-input w-full flex-1 rounded-md text-gray-900 border-none bg-white placeholder:text-gray-500 px-3 text-base" placeholder="Paste your long URL here"/>
           </div>
-          <button class="flex w-full sm:w-auto min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-[var(--primary-color)] text-white text-base font-semibold leading-normal shadow-md hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+          <button type="submit" class="flex w-full sm:w-auto min-w-[120px] cursor-pointer items-center justify-center rounded-md h-12 px-6 bg-[var(--primary-color)] text-white text-base font-semibold shadow-md hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
             <span class="truncate">Shorten</span>
           </button>
         </form>
+        <p id="result" class="mt-4 text-gray-700 font-medium"></p>
       </div>
     </div>
   </section>
@@ -115,7 +112,6 @@
     <div class="flex justify-center space-x-6 mb-4">
       <a class="text-gray-500 hover:text-gray-900" href="#features">Features</a>
       <a class="text-gray-500 hover:text-gray-900" href="#donate">Donate</a>
-
     </div>
     <p class="text-gray-500 text-sm">© 2025 ShortenIt. All rights reserved.</p>
   </div>
@@ -123,5 +119,69 @@
 
 </div>
 </div>
+
+<!-- FIREBASE SCRIPT -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+  // 🔹 Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnyd9x42WkSDiTl0ZQjnEdBY-kH1lxEkQ",
+    authDomain: "shortenit49.firebaseapp.com",
+    projectId: "shortenit49",
+    storageBucket: "shortenit49.firebasestorage.app",
+    messagingSenderId: "6970721182",
+    appId: "1:6970721182:web:8c409103011626e7300c8f"
+  };
+
+  // Init Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Generate random code
+  function generateCode(length = 6) {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    return Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+  }
+
+  // Shorten URL
+  async function shortenUrl() {
+    const input = document.getElementById("longUrl");
+    const longUrl = input.value.trim();
+    if (!longUrl) {
+      alert("Please enter a URL!");
+      return;
+    }
+
+    const code = generateCode();
+    await setDoc(doc(db, "urls", code), { longUrl });
+
+    const shortUrl = `${window.location.origin}?id=${code}`;
+    document.getElementById("result").innerHTML =
+      `✅ Short URL: <a class="text-blue-600 underline" href="${shortUrl}" target="_blank">${shortUrl}</a>`;
+
+    input.value = "";
+  }
+
+  // Redirect if short link is opened
+  async function checkRedirect() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("id");
+    if (code) {
+      const snap = await getDoc(doc(db, "urls", code));
+      if (snap.exists()) {
+        window.location.href = snap.data().longUrl;
+      } else {
+        document.body.innerHTML = "<h2 class='text-center text-red-600 mt-20'>❌ Invalid or expired short link</h2>";
+      }
+    }
+  }
+
+  // Run redirect check
+  checkRedirect();
+  // Expose function
+  window.shortenUrl = shortenUrl;
+</script>
 </body>
 </html>
