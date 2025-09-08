@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
+<link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B600%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<title>ShortenIt - Free URL Shortener</title>
+<link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+  :root {
+    --primary-color: #137fec;
+  }
+  html {
+    scroll-behavior: smooth; /* enables smooth scrolling */
+  }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-800" style='font-family: Inter, "Noto Sans", sans-serif;'>
+<div class="relative flex size-full min-h-screen flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+
+<!-- HEADER -->
+<header class="flex items-center justify-between whitespace-nowrap px-10 py-4">
+  <div class="flex items-center gap-3 text-gray-900">
+    <span class="material-symbols-outlined text-3xl text-[var(--primary-color)]"> link </span>
+    <h2 class="text-xl font-bold tracking-tight">ShortenIt</h2>
+  </div>
+
+  <!-- DONATE BUTTON -->
+  <a href="#donate" class="ml-6 flex items-center justify-center rounded-md h-10 px-5 bg-[var(--primary-color)] text-white text-sm font-semibold shadow-md hover:bg-opacity-90 transition-colors">
+    Donate any amount
+  </a>
+  
+  
+</header>
+
+<!-- MAIN -->
+<main class="flex-1">
+  <!-- Hero Section -->
+  <section class="text-center py-20 lg:py-32 px-4">
+    <div class="max-w-3xl mx-auto">
+      <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter text-gray-900 mb-4">
+        The simplest way to shorten URLs
+      </h1>
+      <p class="text-lg md:text-xl text-gray-600 mb-8">
+        Create clean, memorable short links instantly. No account needed.
+      </p>
+      <div class="max-w-xl mx-auto">
+        <form class="flex flex-col sm:flex-row items-center gap-3 bg-white p-2 rounded-lg shadow-lg border border-gray-200">
+          <div class="flex items-center w-full sm:w-auto flex-1">
+            <span class="material-symbols-outlined text-gray-400 pl-3"> link </span>
+            <input class="form-input w-full flex-1 resize-none overflow-hidden rounded-md text-gray-900 focus:outline-0 focus:ring-0 border-none bg-white h-full placeholder:text-gray-500 px-3 text-base" placeholder="Paste your long URL here"/>
+          </div>
+          <button class="flex w-full sm:w-auto min-w-[120px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-md h-12 px-6 bg-[var(--primary-color)] text-white text-base font-semibold leading-normal shadow-md hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105">
+            <span class="truncate">Shorten</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-20 lg:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Why Choose ShortenIt?</h2>
+        <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          Go beyond basic link shortening. Get a fast and reliable service with no sign-up required.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <div class="flex flex-col items-center p-6">
+          <div class="bg-blue-100 text-[var(--primary-color)] rounded-full p-4 mb-4">
+            <span class="material-symbols-outlined text-3xl"> bolt </span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Instant Shortening</h3>
+          <p class="text-gray-600">Shorten links instantly without creating an account.</p>
+        </div>
+        <div class="flex flex-col items-center p-6">
+          <div class="bg-blue-100 text-[var(--primary-color)] rounded-full p-4 mb-4">
+            <span class="material-symbols-outlined text-3xl"> edit </span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Custom Links</h3>
+          <p class="text-gray-600">Create easy-to-remember short links that you can share anywhere.</p>
+        </div>
+        <div class="flex flex-col items-center p-6">
+          <div class="bg-blue-100 text-[var(--primary-color)] rounded-full p-4 mb-4">
+            <span class="material-symbols-outlined text-3xl"> security </span>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Secure & Reliable</h3>
+          <p class="text-gray-600">Built for speed and security, ensuring your links always work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Donation Section -->
+  <section id="donate" class="py-20 bg-gray-50">
+    <div class="max-w-3xl mx-auto text-center px-4">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Support This Project 💙</h2>
+      <p class="text-lg text-gray-600 mb-6">
+        This service is free to use. If you find it helpful, you can support by sending a donation via GCash.
+      </p>
+      <p class="text-xl font-semibold text-gray-800 mb-2">GCash Number: <span class="text-[var(--primary-color)]">09293122912</span></p>
+      <img src="qr.png" alt="GCash QR Code" class="mx-auto w-40 h-40 shadow-md rounded-lg"/>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-gray-100 border-t border-gray-200">
+  <div class="max-w-5xl mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+    <div class="flex justify-center space-x-6 mb-4">
+      <a class="text-gray-500 hover:text-gray-900" href="#features">Features</a>
+      <a class="text-gray-500 hover:text-gray-900" href="#donate">Donate</a>
+
+    </div>
+    <p class="text-gray-500 text-sm">© 2025 ShortenIt. All rights reserved.</p>
+  </div>
+</footer>
+
+</div>
+</div>
+</body>
+</html>
